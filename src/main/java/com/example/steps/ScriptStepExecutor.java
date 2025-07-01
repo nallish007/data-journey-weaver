@@ -1,7 +1,7 @@
 
 package com.example.steps;
 
-import com.example.model.WorkflowContext;
+import com.example.model.RouteMapContext;
 import com.example.service.ExpressionEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class ScriptStepExecutor implements StepExecutor {
     }
     
     @Override
-    public Map<String, Object> execute(Map<String, Object> config, WorkflowContext context) {
+    public Map<String, Object> execute(Map<String, Object> config, RouteMapContext context) {
         String language = (String) config.getOrDefault("language", "groovy");
         String script = (String) config.get("script");
         

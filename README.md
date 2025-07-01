@@ -1,17 +1,17 @@
 
-# Workflow Engine
+# RouteMap Engine
 
-A Java Spring Boot application that parses YAML workflow definitions and executes them with support for HTTP requests, conditional routing, and Groovy script execution.
+A Java Spring Boot application that parses YAML routemap definitions and executes them with support for HTTP requests, conditional routing, and Groovy script execution.
 
 ## Features
 
-- **YAML Workflow Parsing**: Parse workflow definitions from YAML format
+- **YAML RouteMap Parsing**: Parse routemap definitions from YAML format
 - **HTTP Step Execution**: Make HTTP requests with configurable timeouts and headers
 - **Script Step Execution**: Execute Groovy scripts for data transformation and logic
-- **Conditional Routing**: Dynamic workflow routing based on conditions
+- **Conditional Routing**: Dynamic routemap routing based on conditions
 - **Variable Resolution**: Template variable resolution with `${variable}` syntax
 - **Expression Evaluation**: Groovy expression evaluation for conditions
-- **REST API**: HTTP endpoints for workflow execution
+- **REST API**: HTTP endpoints for routemap execution
 - **Comprehensive Logging**: Detailed logging for debugging and monitoring
 
 ## Quick Start
@@ -25,7 +25,7 @@ A Java Spring Boot application that parses YAML workflow definitions and execute
 ```bash
 # Clone the repository
 git clone <your-repo-url>
-cd workflow-engine
+cd routemap-engine
 
 # Build the project
 mvn clean compile
@@ -38,9 +38,9 @@ The application will start on `http://localhost:8080`
 
 ### API Endpoints
 
-#### Execute Workflow from YAML String
+#### Execute RouteMap from YAML String
 ```bash
-POST /api/workflow/execute?workflowYaml=<yaml-content>
+POST /api/routemap/execute?routeMapYaml=<yaml-content>
 Content-Type: application/json
 
 {
@@ -51,9 +51,9 @@ Content-Type: application/json
 }
 ```
 
-#### Execute Workflow from Resource File
+#### Execute RouteMap from Resource File
 ```bash
-POST /api/workflow/execute-from-resource?resourcePath=workflows/sample-workflow.yaml
+POST /api/routemap/execute-from-resource?resourcePath=routemaps/sample-routemap.yaml
 Content-Type: application/json
 
 {
@@ -64,9 +64,9 @@ Content-Type: application/json
 }
 ```
 
-### Example Workflow
+### Example RouteMap
 
-The project includes a sample workflow (`src/main/resources/workflows/sample-workflow.yaml`) that demonstrates:
+The project includes a sample routemap (`src/main/resources/routemaps/sample-routemap.yaml`) that demonstrates:
 
 1. **HTTP Request**: Fetch user data from an API
 2. **Data Transformation**: Transform user data using Groovy script
@@ -74,10 +74,10 @@ The project includes a sample workflow (`src/main/resources/workflows/sample-wor
 4. **Data Enrichment**: Optional data enrichment for adult users
 5. **Final Processing**: Compile final results
 
-### Workflow Definition Structure
+### RouteMap Definition Structure
 
 ```yaml
-workflow:
+routemap:
   initialKeys: [ apiUrl, httpMethod, payload, token, enrichmentUrl ]
   
   steps:
@@ -101,8 +101,8 @@ workflow:
 
 #### Script Step (`com.example.steps.ScriptStep`)  
 - Execute Groovy scripts
-- Access to workflow context and variables
-- Return values become workflow variables
+- Access to routemap context and variables
+- Return values become routemap variables
 - Data transformation and business logic
 
 ### Variable Resolution
@@ -119,16 +119,16 @@ The engine supports template variable resolution using `${variable}` syntax:
 mvn test
 
 # Run specific test
-mvn test -Dtest=WorkflowEngineTest
+mvn test -Dtest=RouteMapEngineTest
 ```
 
 ## Architecture
 
-- **WorkflowParser**: YAML parsing and validation
-- **WorkflowEngine**: Core workflow execution engine
+- **RouteMapParser**: YAML parsing and validation
+- **RouteMapEngine**: Core routemap execution engine
 - **StepExecutors**: Pluggable step execution implementations
 - **ExpressionEvaluator**: Variable resolution and condition evaluation
-- **WorkflowContext**: Execution state and variable management
+- **RouteMapContext**: Execution state and variable management
 
 ## Configuration
 

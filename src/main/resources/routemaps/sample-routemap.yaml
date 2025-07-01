@@ -1,0 +1,78 @@
+
+routemap:
+  initialKeys: [ apiUrl, httpMethod, payload, token, enrichmentUrl ]
+
+  steps:
+    - id: fetchUser
+      class: com.example.steps.HttpStep
+      config:
+        url: "${apiUrl}"
+        method: "${httpMethod}"
+        headers:
+          Authorization: "Bearer ${token}"
+          Accept: "application/json"
+        connectTimeoutMs: 5000
+        readTimeoutMs: 10000
+      next:
+        - condition: "${lastResponse.statusCode == 200}"
+          to: transformUser
+        - to: handleError
+
+    - id: transformUser
+      class: com.example.steps.ScriptStep
+      config:
+        language: groovy
+        script: |
+          def user = context.userData
+          user.fullName = "${user.firstName} ${user.lastName}"
+          user.isAdult = user.age >= 18
+          return [ userTransformed: user ]
+      next:
+        - condition: "${userTransformed.isAdult}"
+          to: enrichData
+        - to: skipEnrichment
+
+    - id: enrichData
+      class: com.example.steps.HttpStep
+      config:
+        url: "${enrichmentUrl}"
+        method: POST
+        body: "${userTransformed}"
+        headers:
+          Content-Type: "application/json"
+        connectTimeoutMs: 3000
+        readTimeoutMs: 5000
+      next:
+        - to: finalize
+
+    - id: skipEnrichment
+      class: com.example.steps.ScriptStep
+      config:
+        language: groovy
+        script: |
+          return [ enrichmentSkipped: true ]
+      next:
+        - to: finalize
+
+    - id: handleError
+      class: com.example.steps.ScriptStep
+      config:
+        language: groovy
+        script: |
+          return [ error: "User fetch failed", status: "aborted" ]
+      next:
+        - to: end
+
+    - id: finalize
+      class: com.example.steps.ScriptStep
+      config:
+        language: groovy
+        script: |
+          def summary = [
+            user: context.userTransformed ?: null,
+            enriched: context.enrichmentSkipped ? false : true,
+            status: "completed"
+          ]
+          return [ result: summary ]
+      next:
+        - to: end

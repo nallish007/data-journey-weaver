@@ -1,7 +1,7 @@
 
 package com.example.service;
 
-import com.example.model.WorkflowContext;
+import com.example.model.RouteMapContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class ExpressionEvaluator {
         }
     }
     
-    public boolean evaluate(String expression, WorkflowContext context) {
+    public boolean evaluate(String expression, RouteMapContext context) {
         try {
             String resolvedExpression = resolveVariables(expression, context);
             logger.debug("Evaluating expression: {} -> {}", expression, resolvedExpression);
@@ -52,7 +52,7 @@ public class ExpressionEvaluator {
         }
     }
     
-    public String resolveVariables(String input, WorkflowContext context) {
+    public String resolveVariables(String input, RouteMapContext context) {
         if (input == null) {
             return null;
         }
@@ -70,7 +70,7 @@ public class ExpressionEvaluator {
         return result.toString();
     }
     
-    private Object resolveVariablePath(String path, WorkflowContext context) {
+    private Object resolveVariablePath(String path, RouteMapContext context) {
         String[] parts = path.split("\\.");
         Object current = null;
         
