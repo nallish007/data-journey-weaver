@@ -7,23 +7,25 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>workflow-engine</artifactId>
+    <artifactId>routemap-engine</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Workflow Engine</name>
-    <description>YAML-based workflow processing engine</description>
+    <name>RouteMap Engine</name>
+    <description>YAML-based routemap processing engine</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.0</version>
+        <version>2.7.18</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <java.version>17</java.version>
-        <groovy.version>4.0.15</groovy.version>
+        <java.version>1.8</java.version>
+        <groovy.version>3.0.19</groovy.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -57,15 +59,10 @@
 
         <!-- Groovy for Script Execution -->
         <dependency>
-            <groupId>org.apache.groovy</groupId>
-            <artifactId>groovy</artifactId>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
             <version>${groovy.version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.groovy</groupId>
-            <artifactId>groovy-jsr223</artifactId>
-            <version>${groovy.version}</version>
+            <type>pom</type>
         </dependency>
 
         <!-- Utilities -->
@@ -87,6 +84,15 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

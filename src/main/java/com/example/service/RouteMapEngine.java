@@ -87,10 +87,12 @@ public class RouteMapEngine {
     }
     
     private RouteMapStep findStepById(RouteMapDefinition routeMap, String stepId) {
-        return routeMap.getSteps().stream()
-                .filter(step -> stepId.equals(step.getId()))
-                .findFirst()
-                .orElse(null);
+        for (RouteMapStep step : routeMap.getSteps()) {
+            if (stepId.equals(step.getId())) {
+                return step;
+            }
+        }
+        return null;
     }
     
     private String determineNextStep(RouteMapStep step, RouteMapContext context) {

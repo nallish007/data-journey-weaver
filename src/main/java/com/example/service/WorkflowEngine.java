@@ -87,10 +87,12 @@ public class WorkflowEngine {
     }
     
     private WorkflowStep findStepById(WorkflowDefinition workflow, String stepId) {
-        return workflow.getSteps().stream()
-                .filter(step -> stepId.equals(step.getId()))
-                .findFirst()
-                .orElse(null);
+        for (WorkflowStep step : workflow.getSteps()) {
+            if (stepId.equals(step.getId())) {
+                return step;
+            }
+        }
+        return null;
     }
     
     private String determineNextStep(WorkflowStep step, WorkflowContext context) {

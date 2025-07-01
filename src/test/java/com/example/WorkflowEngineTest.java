@@ -5,15 +5,18 @@ import com.example.model.WorkflowContext;
 import com.example.model.WorkflowDefinition;
 import com.example.service.WorkflowEngine;
 import com.example.service.WorkflowParser;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class WorkflowEngineTest {
     
@@ -40,7 +43,7 @@ public class WorkflowEngineTest {
     public void testScriptStepExecution() throws Exception {
         WorkflowDefinition workflow = workflowParser.parseFromResource("workflows/sample-workflow.yaml");
         
-        Map<String, Object> requestData = new HashMap<>();
+        Map<String, Object> requestData = new HashMap<String, Object>();
         requestData.put("apiUrl", "https://jsonplaceholder.typicode.com/users/1");
         requestData.put("httpMethod", "GET");
         requestData.put("token", "dummy-token");
