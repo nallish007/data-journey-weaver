@@ -5,6 +5,9 @@ server:
 spring:
   application:
     name: routemap-engine
+  groovy:
+    template:
+      check-template-location: false
 
 logging:
   level:
